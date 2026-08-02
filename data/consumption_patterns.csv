@@ -1,0 +1,5 @@
+item_id,estimated_units_per_day,confidence,source
+milk,0.8,medium,purchase_history
+rice,0.15,medium,purchase_history
+pasta,0.2,medium,purchase_history
+yogurt,1.0,high,inventory_history

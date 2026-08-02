@@ -1,0 +1,5 @@
+item_id,item_name,quantity,unit,days_until_expiry
+milk,Milk,0.5,carton,4
+rice,Rice,0,package,
+pasta,Pasta,2,package,179
+yogurt,Yogurt,3,cup,0
