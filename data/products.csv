@@ -1,0 +1,13 @@
+item_id,item_name,category,unit,perishable
+milk,Milk,dairy,carton,true
+yogurt,Yogurt,dairy,cup,true
+eggs,Eggs,dairy,dozen,true
+bread,Bread,bakery,loaf,true
+rice,Rice,pantry,package,false
+pasta,Pasta,pantry,package,false
+tomatoes,Tomatoes,produce,kg,true
+cucumbers,Cucumbers,produce,kg,true
+chicken,Chicken,meat,kg,true
+coffee,Coffee,pantry,package,false
+olive_oil,Olive Oil,pantry,bottle,false
+cat_food,Cat Food,pets,bag,false

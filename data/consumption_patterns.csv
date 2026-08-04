@@ -1,5 +1,13 @@
 item_id,estimated_units_per_day,confidence,source
 milk,0.8,medium,purchase_history
+yogurt,1.0,high,inventory_history
+eggs,0.1,medium,purchase_history
+bread,0.45,medium,purchase_history
 rice,0.15,medium,purchase_history
 pasta,0.2,medium,purchase_history
-yogurt,1.0,high,inventory_history
+tomatoes,0.25,medium,inventory_history
+cucumbers,0.2,medium,inventory_history
+chicken,0.18,low,purchase_history
+coffee,0.08,high,purchase_history
+olive_oil,0.025,low,purchase_history
+cat_food,0.07,high,purchase_history

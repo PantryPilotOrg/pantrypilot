@@ -1,0 +1,13 @@
+item_id,is_regular_item,target_quantity,priority
+milk,true,2,critical
+yogurt,true,6,normal
+eggs,true,1,normal
+bread,true,2,critical
+rice,true,2,normal
+pasta,true,3,normal
+tomatoes,true,1.5,normal
+cucumbers,true,1.5,normal
+chicken,true,2,normal
+coffee,true,2,normal
+olive_oil,true,1,normal
+cat_food,true,1,critical

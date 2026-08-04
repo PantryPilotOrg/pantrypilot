@@ -1,5 +1,13 @@
 item_id,item_name,quantity,unit,days_until_expiry
-milk,Milk,0,carton,
-rice,Rice,0,package,
-pasta,Pasta,1,package,178
-yogurt,Yogurt,0,cup,
+milk,Milk,0.0,carton,
+yogurt,Yogurt,1.0,cup,1
+eggs,Eggs,0.1,dozen,8
+bread,Bread,0.0,loaf,
+rice,Rice,0.0,package,
+pasta,Pasta,0.5,package,178
+tomatoes,Tomatoes,0.2,kg,1
+cucumbers,Cucumbers,0.1,kg,1
+chicken,Chicken,0.3,kg,1
+coffee,Coffee,0.3,package,
+olive_oil,Olive Oil,0.15,bottle,
+cat_food,Cat Food,0.1,bag,
