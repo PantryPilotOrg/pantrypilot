@@ -2,12 +2,12 @@ import csv
 
 from app.config import DATA_DIR
 
-def find_purchase_options(items: list[str]) -> list[dict]:
+def get_supplier_offers(item_ids: list[str]) -> list[dict]:
     """
     Load supplier offers from CSV for the requested item IDs.
     """
     suppliers_path = DATA_DIR / "suppliers.csv"
-    requested_items = set(items)
+    requested_items = set(item_ids)
     offers = []
 
     with suppliers_path.open(
@@ -40,6 +40,24 @@ def find_purchase_options(items: list[str]) -> list[dict]:
 
     return offers
 
+
+def initialize_supplier_basket(offer: dict) -> dict:
+    """
+    Create the initial basket structure for a supplier.
+    """
+    return {
+        "supplier_id": offer["supplier_id"],
+        "supplier_name": offer["supplier_name"],
+        "supplier_type": offer["supplier_type"],
+        "delivery_channel": offer["delivery_channel"],
+        "delivery_fee": offer["delivery_fee"],
+        "minimum_order": offer["minimum_order"],
+        "earliest_available_day": offer["earliest_available_day"],
+        "items": [],
+        "subtotal": 0.0,
+        "all_items_available": True,
+    }
+
 def compare_basket_costs(items: list[dict]) -> list[dict]:
     """
     Calculate the cost of a proposed basket at each supplier.
@@ -55,7 +73,7 @@ def compare_basket_costs(items: list[dict]) -> list[dict]:
         One basket-cost result per supplier.
     """
     requested_ids = [item["item_id"] for item in items]
-    offers = find_purchase_options(requested_ids)
+    offers = get_supplier_offers(requested_ids)
 
     suppliers = {}
 
@@ -63,20 +81,7 @@ def compare_basket_costs(items: list[dict]) -> list[dict]:
         supplier_id = offer["supplier_id"]
 
         if supplier_id not in suppliers:
-            suppliers[supplier_id] = {
-                "supplier_id": supplier_id,
-                "supplier_name": offer["supplier_name"],
-                "supplier_type": offer["supplier_type"],
-                "delivery_channel": offer["delivery_channel"],
-                "delivery_fee": offer["delivery_fee"],
-                "minimum_order": offer["minimum_order"],
-                "earliest_available_day": offer[
-                    "earliest_available_day"
-                ],
-                "items": [],
-                "subtotal": 0.0,
-                "all_items_available": True,
-            }
+            suppliers[supplier_id] = initialize_supplier_basket(offer)
 
         requested_item = next(
             item
@@ -113,6 +118,10 @@ def compare_basket_costs(items: list[dict]) -> list[dict]:
 
         supplier["subtotal"] = subtotal
         supplier["minimum_order_met"] = minimum_order_met
+        supplier["can_order"] = (
+            supplier["all_items_available"]
+            and minimum_order_met
+        )
         supplier["amount_missing_for_minimum"] = round(
             max(0, minimum_order - subtotal),
             2,
