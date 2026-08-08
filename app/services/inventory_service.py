@@ -168,7 +168,6 @@ def get_inventory_risks(day: int) -> list[dict]:
                 {
                     "item_id": item["item_id"],
                     "risk_type": "depletion",
-                    "severity": "urgent",
                     "details": (
                         f"Estimated to run out in "
                         f"{depletion_days} day(s)."
@@ -185,7 +184,6 @@ def get_inventory_risks(day: int) -> list[dict]:
                 {
                     "item_id": item["item_id"],
                     "risk_type": "expiry",
-                    "severity": "urgent",
                     "details": (
                         f"{item['quantity']} {item['unit']}(s) "
                         f"expire in {expiry_days} day(s)."

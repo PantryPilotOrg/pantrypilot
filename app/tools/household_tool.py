@@ -3,6 +3,8 @@ from app.services.inventory_service import (
     get_inventory_with_estimates,
 )
 from app.services.profile_service import get_household_profile
+from app.services.event_service import get_upcoming_events
+from app.services.budget_service import get_budget_state
 
 
 def get_household_state(day: int) -> dict:
@@ -22,6 +24,8 @@ def get_household_state(day: int) -> dict:
     return {
         "simulation_day": day,
         "household_profile": get_household_profile(),
+        "budget": get_budget_state(),
         "inventory": get_inventory_with_estimates(day),
         "risks": get_inventory_risks(day),
+        "upcoming_events": get_upcoming_events(day),
     }
