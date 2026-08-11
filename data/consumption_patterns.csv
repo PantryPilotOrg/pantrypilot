@@ -11,3 +11,15 @@ chicken,0.18,low,purchase_history
 coffee,0.08,high,purchase_history
 olive_oil,0.025,low,purchase_history
 cat_food,0.07,high,purchase_history
+bananas,0.3,medium,inventory_history
+apples,0.25,medium,inventory_history
+potatoes,0.2,medium,purchase_history
+onions,0.1,medium,purchase_history
+cheese,0.08,medium,purchase_history
+cereal,0.12,medium,purchase_history
+flour,0.03,low,purchase_history
+tuna,0.08,medium,purchase_history
+frozen_vegetables,0.1,medium,purchase_history
+toilet_paper,0.08,high,purchase_history
+dish_soap,0.03,medium,purchase_history
+laundry_detergent,0.02,medium,purchase_history

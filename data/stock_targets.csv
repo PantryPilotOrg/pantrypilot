@@ -11,3 +11,15 @@ chicken,true,2,normal
 coffee,true,2,normal
 olive_oil,true,1,normal
 cat_food,true,1,critical
+bananas,true,1.5,normal
+apples,true,1.5,normal
+potatoes,true,2.0,normal
+onions,true,1.0,normal
+cheese,true,1.0,normal
+cereal,true,1.5,normal
+flour,true,1.0,normal
+tuna,true,2.0,normal
+frozen_vegetables,true,2.0,normal
+toilet_paper,true,2.0,critical
+dish_soap,true,1.0,normal
+laundry_detergent,true,1.0,normal

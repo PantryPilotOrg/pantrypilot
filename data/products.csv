@@ -11,3 +11,15 @@ chicken,Chicken,meat,kg,true
 coffee,Coffee,pantry,package,false
 olive_oil,Olive Oil,pantry,bottle,false
 cat_food,Cat Food,pets,bag,false
+bananas,Bananas,produce,kg,true
+apples,Apples,produce,kg,true
+potatoes,Potatoes,produce,kg,true
+onions,Onions,produce,kg,true
+cheese,Cheese,dairy,package,true
+cereal,Cereal,pantry,package,false
+flour,Flour,pantry,package,false
+tuna,Tuna,pantry,package,false
+frozen_vegetables,Frozen Vegetables,frozen,package,false
+toilet_paper,Toilet Paper,household,package,false
+dish_soap,Dish Soap,household,bottle,false
+laundry_detergent,Laundry Detergent,household,bottle,false

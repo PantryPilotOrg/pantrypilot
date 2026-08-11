@@ -11,3 +11,15 @@ chicken,Chicken,0.8,kg,1
 coffee,Coffee,0.7,package,
 olive_oil,Olive Oil,0.55,bottle,
 cat_food,Cat Food,0.38,bag,
+bananas,Bananas,0.9,kg,3
+apples,Apples,1.15,kg,6
+potatoes,Potatoes,1.3,kg,13
+onions,Onions,0.7,kg,13
+cheese,Cheese,0.72,package,11
+cereal,Cereal,0.88,package,89
+flour,Flour,0.77,package,179
+tuna,Tuna,1.42,package,364
+frozen_vegetables,Frozen Vegetables,1.1,package,119
+toilet_paper,Toilet Paper,1.32,package,
+dish_soap,Dish Soap,0.77,bottle,
+laundry_detergent,Laundry Detergent,0.68,bottle,
