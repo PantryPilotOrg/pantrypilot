@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from app.agent.runner import run_agent
 
 class ExecuteRequest(BaseModel):
     prompt: str
@@ -51,11 +52,13 @@ def get_agent_info():
 @app.post("/api/execute")
 def execute(request: ExecuteRequest):
     try:
+        result = run_agent(request.prompt)
+
         return {
             "status": "ok",
             "error": None,
-            "response": f"Received prompt: {request.prompt}",
-            "steps": []
+            "response": result["response"],
+            "steps": result["steps"]
         }
 
     except Exception as error:
