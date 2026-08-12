@@ -234,3 +234,9 @@ button span {
     line-height: 1.6;
     box-shadow: 0 4px 14px rgba(40, 25, 80, 0.035);
 }
+
+.hint {
+    margin: 6px 0 10px;
+    color: #7b8198;
+    font-size: 13px;
+}

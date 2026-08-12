@@ -3,7 +3,7 @@ const responseBox = document.getElementById("response");
 const stepsBox = document.getElementById("steps");
 const promptBox = document.getElementById("prompt");
 
-runButton.addEventListener("click", function () {
+runButton.addEventListener("click", async function () {
     const userPrompt = promptBox.value.trim();
 
     if (!userPrompt) {
@@ -14,47 +14,61 @@ runButton.addEventListener("click", function () {
     runButton.textContent = "PantryPilot is thinking...";
     runButton.disabled = true;
 
-    // Temporary mock response.
-    // Later this will come from POST /api/execute.
-    const mockResult = {
-        response:
-            "I recommend ordering the urgent household items today and choosing the supplier with same-day delivery.",
+    responseBox.textContent = "Running agent...";
+    stepsBox.textContent = "Waiting for execution steps...";
 
-        steps: [
-            {
-                module: "pantrypilot_agent",
-                prompt: "Check the household state for day 3.",
-                response: "Found several items that are depleted or running low."
+    try {
+        const apiResponse = await fetch("/api/execute", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-            {
-                module: "pantrypilot_agent",
-                prompt: "Compare purchase options.",
-                response: "Compared available suppliers, prices and delivery times."
-            },
-            {
-                module: "pantrypilot_agent",
-                prompt: "Choose the most practical option.",
-                response: "Selected the supplier that can handle the urgent needs today."
-            }
-        ]
-    };
+            body: JSON.stringify({
+                prompt: userPrompt
+            })
+        });
 
-    responseBox.textContent = mockResult.response;
+        const result = await apiResponse.json();
 
-    stepsBox.innerHTML = "";
+        if (result.status !== "ok") {
+            responseBox.textContent =
+                result.error || "Something went wrong while running PantryPilot.";
 
-    mockResult.steps.forEach(function (step, index) {
-        const stepElement = document.createElement("div");
+            stepsBox.textContent = "No execution steps available.";
+            return;
+        }
 
-        stepElement.innerHTML = `
-            <strong>Step ${index + 1} — ${step.module}</strong>
-            <p><strong>Prompt:</strong> ${step.prompt}</p>
-            <p><strong>Response:</strong> ${step.response}</p>
-        `;
+        responseBox.textContent = result.response;
 
-        stepsBox.appendChild(stepElement);
-    });
+        stepsBox.innerHTML = "";
 
-    runButton.textContent = "Run Agent →";
-    runButton.disabled = false;
+        result.steps.forEach(function (step, index) {
+            const stepElement = document.createElement("div");
+            stepElement.className = "step-card";
+
+            stepElement.innerHTML = `
+                <strong>Step ${index + 1} — ${step.module}</strong>
+                <p><strong>Prompt:</strong></p>
+                <pre>${JSON.stringify(step.prompt, null, 2)}</pre>
+
+                <p><strong>Response:</strong></p>
+                <pre>${JSON.stringify(step.response, null, 2)}</pre>
+            `;
+
+            stepsBox.appendChild(stepElement);
+        });
+
+    } catch (error) {
+        responseBox.textContent =
+            "Could not connect to the PantryPilot API.";
+
+        stepsBox.textContent =
+            "No execution steps available.";
+
+        console.error(error);
+
+    } finally {
+        runButton.textContent = "Run Agent →";
+        runButton.disabled = false;
+    }
 });
