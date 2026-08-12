@@ -1,5 +1,5 @@
 from app.services.supplier_service import evaluate_supplier_order
-
+from app.services.budget_service import get_budget_state
 
 def process_order(
     supplier_id: str,
@@ -83,6 +83,22 @@ def process_order(
             ],
             "message": (
                 "The supplier's minimum order requirement is not met."
+            ),
+        }
+
+    budget = get_budget_state()
+    order_total = selected_option["total_with_delivery"]
+
+    if order_total > budget["remaining_budget"]:
+        return {
+            "success": False,
+            "status": "rejected",
+            "error_code": "BUDGET_EXCEEDED",
+            "supplier_id": supplier_id,
+            "order_total": order_total,
+            "remaining_budget": budget["remaining_budget"],
+            "message": (
+                "The order total exceeds the household's remaining budget."
             ),
         }
 
