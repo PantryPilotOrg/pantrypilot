@@ -3,6 +3,7 @@ import json
 from app.config import DATA_DIR
 from app.services.profile_service import get_household_profile
 
+INITIAL_SPENT_TO_DATE = 720
 
 def get_budget_state() -> dict:
     """
@@ -21,3 +22,11 @@ def get_budget_state() -> dict:
         "spent_to_date": spent_to_date,
         "remaining_budget": monthly_budget - spent_to_date,
     }
+
+def reset_budget_state() -> None:
+    with open(DATA_DIR / "budget_state.json", "w", encoding="utf-8") as file:
+        json.dump(
+            {"spent_to_date": INITIAL_SPENT_TO_DATE},
+            file,
+            indent=2
+        )
