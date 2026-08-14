@@ -1,4 +1,7 @@
+from pathlib import Path
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from app.agent.runner import run_agent
 
@@ -6,21 +9,23 @@ class ExecuteRequest(BaseModel):
     prompt: str
 
 app = FastAPI()
+STATIC_DIR = Path(__file__).resolve().parent / "static"
 
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 @app.get("/api/team_info")
 def get_team_info():
     return {
-        "group_batch_order_number": "TODO",
+        "group_batch_order_number": "1_3",
         "team_name": "PantryPilot",
         "students": [
             {
                 "name": "Chana Gutenmacher",
-                "email": "TODO"
+                "email": "chana4@gmail.com"
             },
             {
                 "name": "Ayla Livney",
-                "email": "TODO"
+                "email": "aylalivney@gmail.com"
             }
         ]
     }
@@ -48,6 +53,17 @@ def get_agent_info():
             }
         ]
     }
+
+@app.get("/api/model_architecture")
+def get_model_architecture():
+    return FileResponse(
+        STATIC_DIR / "model_architecture.png",
+        media_type="image/png"
+    )
+
+@app.get("/")
+def get_gui():
+    return FileResponse(STATIC_DIR / "index.html")
 
 @app.post("/api/execute")
 def execute(request: ExecuteRequest):
