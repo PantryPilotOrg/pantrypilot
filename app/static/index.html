@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PantryPilot</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="decoration dot-one"></div>
+    <div class="decoration dot-two"></div>
+    <div class="decoration dot-three"></div>
+    <div class="container">
+
+
+        <div class="header">
+            <div class="logo-icon">🛒</div>
+
+            <div>
+                <h1>PantryPilot</h1>
+                <p class="subtitle">Your autonomous household shopping assistant</p>
+            </div>
+        </div>
+
+        <div class="prompt-title">
+            <p class="hint">
+                Try: “Manage the household grocery needs for day 3.”
+                Supported simulation days: 1–3.
+            </p>
+            What should PantryPilot handle today?
+        </div>
+
+        <textarea
+            id="prompt"
+            rows="6"
+            placeholder="Example: Manage the household grocery needs for day 3."
+        ></textarea>
+
+        <br><br>
+
+        <button id="run-button">
+            Run Agent <span>→</span>
+        </button>
+
+        <h2 class="section-title">
+            <span>✦</span> Agent Response
+        </h2>
+        <div id="response">
+            No response yet.
+        </div>
+
+        <h2 class="section-title">
+            <span>◎</span> Execution Steps
+        </h2>
+        <div id="steps">
+            No steps yet.
+        </div>
+
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
