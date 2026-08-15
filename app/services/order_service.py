@@ -1,7 +1,9 @@
 from app.services.supplier_service import evaluate_supplier_order
-from app.services.budget_service import get_budget_state
+from app.services.budget_service import add_spending, get_budget_state
+from app.services.order_history_service import append_order
 
 def process_order(
+    simulation_day: int,
     supplier_id: str,
     items: list[dict],
 ) -> dict:
@@ -14,6 +16,7 @@ def process_order(
     Args:
         supplier_id: The ID of the supplier selected for the order.
         items: Requested item IDs and quantities.
+        simulation_day: Current simulation day.
 
     Returns:
         A structured mock order confirmation when the order is valid,
@@ -102,6 +105,21 @@ def process_order(
             ),
         }
 
+    updated_budget = add_spending(order_total)
+    order_record = {
+        "simulation_day": simulation_day,
+        "supplier_id": selected_option["supplier_id"],
+        "supplier_name": selected_option["supplier_name"],
+        "items": selected_option["items"],
+        "subtotal": selected_option["subtotal"],
+        "delivery_fee": selected_option["delivery_fee"],
+        "total_with_delivery": selected_option["total_with_delivery"],
+        "earliest_available_day": selected_option["earliest_available_day"],
+        "budget_after_order": updated_budget,
+    }
+
+    append_order(order_record)
+
     return {
         "success": True,
         "status": "confirmed",
@@ -116,5 +134,6 @@ def process_order(
         "earliest_available_day": selected_option[
             "earliest_available_day"
         ],
+        "budget_after_order": updated_budget,
         "message": "Mock order placed successfully.",
     }

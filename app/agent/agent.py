@@ -27,6 +27,9 @@ class FindPurchaseOptionsInput(BaseModel):
 
 
 class PlaceOrderInput(BaseModel):
+    simulation_day: int = Field(
+        description="Current simulation day for the order."
+    )
     supplier_id: str = Field(
         description="ID of the supplier selected for the order."
     )
@@ -48,6 +51,7 @@ def find_purchase_options_tool(
 
 
 def place_order_tool(
+    simulation_day: int,
     supplier_id: str,
     items: list[PurchaseItem],
 ) -> dict:
@@ -56,6 +60,7 @@ def place_order_tool(
     for the existing place-order tool.
     """
     return place_order(
+        simulation_day=simulation_day,
         supplier_id=supplier_id,
         items=[item.model_dump() for item in items],
     )

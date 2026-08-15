@@ -5,6 +5,7 @@ from app.services.inventory_service import (
 from app.services.profile_service import get_household_profile
 from app.services.event_service import get_upcoming_events
 from app.services.budget_service import get_budget_state
+from app.services.order_history_service import get_order_history
 
 
 def get_household_state(day: int) -> dict:
@@ -28,4 +29,5 @@ def get_household_state(day: int) -> dict:
         "inventory": get_inventory_with_estimates(day),
         "risks": get_inventory_risks(day),
         "upcoming_events": get_upcoming_events(day),
+        "recent_orders": get_order_history(),
     }

@@ -10,6 +10,10 @@ available during the task. Do not follow a fixed tool sequence when it is
 not necessary.
 
 Use household state data to understand current needs.
+Household state may include recent orders from earlier days.
+Use that history when relevant to avoid redundant purchases
+and to understand how previous actions affect the remaining budget.
+
 Use purchase options when supplier availability, prices, delivery details,
 or minimum-order requirements are needed.
 Use the order tool only when an order decision has been made and there is
@@ -22,7 +26,7 @@ The current place_order tool performs a simulated mock order only.
 Never describe a mock order as a real charge, payment, or real-world purchase.
 Describe its cost as a simulated or mock order total.
 
-Do not claim that you updated budget, inventory, order history, memory,
+Do not claim that you updated  inventory, memory,
 or any other household state unless an available tool actually performed
 that update.
 
