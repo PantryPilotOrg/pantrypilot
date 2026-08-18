@@ -1,23 +1,31 @@
 from pathlib import Path
+import json
+import re
+
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+
 from app.agent.runner import run_agent
 from app.services.scheduler_service import run_days
 
+
 class ExecuteRequest(BaseModel):
     prompt: str
+
 
 class SimulationRequest(BaseModel):
     prompt: str
     start_day: int
     end_day: int
 
+
 app = FastAPI()
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
 
 @app.get("/api/team_info")
 def get_team_info():
@@ -39,25 +47,30 @@ def get_team_info():
 
 @app.get("/api/agent_info")
 def get_agent_info():
+    examples_file = (
+        Path(__file__).resolve().parent.parent
+        / "data"
+        / "agent_info_examples.json"
+    )
+
+    with examples_file.open(encoding="utf-8-sig") as file:
+        prompt_examples = json.load(file)
+
     return {
         "description": (
-            "PantryPilot is an autonomous household inventory and grocery "
-            "purchasing agent."
+            "PantryPilot is an autonomous household shopping agent that "
+            "uses simulated household data to evaluate needs, compare "
+            "purchase options, and make shopping decisions."
         ),
         "purpose": (
-            "Help manage household stock, reduce food waste, avoid shortages, "
-            "and make cost-aware purchasing decisions."
+            "Reduce household shopping effort, prevent shortages and "
+            "unnecessary purchases, reduce food waste, and make cost-aware "
+            "purchasing decisions based on changing household needs."
         ),
         "prompt_template": {
-            "template": "Manage my kitchen for the current simulated day."
+            "template": "Manage my household for simulation day {day}."
         },
-        "prompt_examples": [
-            {
-                "prompt": "Manage my kitchen today.",
-                "full_response": "TODO - replace with a real agent response.",
-                "steps": []
-            }
-        ]
+        "prompt_examples": prompt_examples,
     }
 
 @app.get("/api/model_architecture")
@@ -67,14 +80,60 @@ def get_model_architecture():
         media_type="image/png"
     )
 
+
 @app.get("/")
 def get_gui():
     return FileResponse(STATIC_DIR / "index.html")
 
+
 @app.post("/api/execute")
 def execute(request: ExecuteRequest):
     try:
-        result = run_agent(request.prompt)
+        prompt = request.prompt
+
+        range_match = re.search(
+            r"simulation from day (\d+) through day (\d+)",
+            prompt,
+            re.IGNORECASE,
+        )
+
+        if range_match:
+            start_day = int(range_match.group(1))
+            end_day = int(range_match.group(2))
+
+            if not 1 <= start_day <= 7 or not 1 <= end_day <= 7:
+                raise ValueError("Days must be between 1 and 7.")
+
+            if start_day > end_day:
+                raise ValueError("Start day cannot be after end day.")
+
+            results = run_days(
+                start_day,
+                end_day,
+                prompt,
+            )
+
+            responses = []
+            all_steps = []
+
+            for day_result in results:
+                day = day_result.get("simulation_day")
+                day_response = day_result.get("response", "")
+
+                responses.append(
+                    f"DAY {day}\n{day_response}"
+                )
+
+                all_steps.extend(day_result.get("steps", []))
+
+            return {
+                "status": "ok",
+                "error": None,
+                "response": "\n\n".join(responses),
+                "steps": all_steps,
+            }
+
+        result = run_agent(prompt)
 
         return {
             "status": "ok",
@@ -90,6 +149,7 @@ def execute(request: ExecuteRequest):
             "response": None,
             "steps": []
         }
+
 
 @app.post("/api/simulate")
 def simulate(request: SimulationRequest):
@@ -111,4 +171,4 @@ def simulate(request: SimulationRequest):
             "status": "error",
             "error": str(error),
             "results": [],
-        }        
+        }

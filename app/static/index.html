@@ -33,10 +33,10 @@
         </div>
 
         <div class="prompt-title">
-            What should PantryPilot manage?
+            Let PantryPilot take it from here
 
             <p class="hint">
-                Try: “Manage my kitchen while minimizing unnecessary purchases.”
+                Set a goal, choose a simulation period, and PantryPilot will handle the shopping decisions.
             </p>
         </div>
 
@@ -44,7 +44,47 @@
             id="prompt"
             rows="4"
             placeholder="Enter your request..."
-        >Manage my kitchen while minimizing unnecessary purchases.</textarea>
+        >Manage my household.</textarea>
+
+        <div class="prompt-title">
+            Simulation period
+
+            <p class="hint">
+                This MVP uses simulated household data. Choose one day for a single check, or a range of days to see how PantryPilot responds to changing needs over time.
+            </p>
+        </div>
+
+        <div class="day-controls">
+
+            <div class="day-field">
+                <label for="start-day">From day</label>
+
+                <select id="start-day">
+                    <option value="1" selected>Day 1</option>
+                    <option value="2">Day 2</option>
+                    <option value="3">Day 3</option>
+                    <option value="4">Day 4</option>
+                    <option value="5">Day 5</option>
+                    <option value="6">Day 6</option>
+                    <option value="7">Day 7</option>
+                </select>
+            </div>
+
+            <div class="day-field">
+                <label for="end-day">To day</label>
+
+                <select id="end-day">
+                    <option value="1" selected>Day 1</option>
+                    <option value="2">Day 2</option>
+                    <option value="3">Day 3</option>
+                    <option value="4">Day 4</option>
+                    <option value="5">Day 5</option>
+                    <option value="6">Day 6</option>
+                    <option value="7">Day 7</option>
+                </select>
+            </div>
+
+        </div>
 
         <button id="run-button">
             Run Agent →

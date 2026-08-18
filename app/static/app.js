@@ -2,12 +2,24 @@ const runButton = document.getElementById("run-button");
 const responseBox = document.getElementById("response");
 const stepsBox = document.getElementById("steps");
 const promptBox = document.getElementById("prompt");
+const startDayBox = document.getElementById("start-day");
+const endDayBox = document.getElementById("end-day");
 
 runButton.addEventListener("click", async function () {
     const userPrompt = promptBox.value.trim();
+    const startDay = Number(startDayBox.value);
+    const endDay = Number(endDayBox.value);
 
     if (!userPrompt) {
         responseBox.textContent = "Please enter a request first.";
+        return;
+    }
+
+    if (startDay > endDay) {
+        responseBox.textContent =
+            "Start day cannot be after end day.";
+        stepsBox.textContent =
+            "Please choose a valid simulation period.";
         return;
     }
 
@@ -18,13 +30,18 @@ runButton.addEventListener("click", async function () {
     stepsBox.textContent = "Waiting for execution steps...";
 
     try {
+        const simulationPrompt =
+            startDay === endDay
+                ? `${userPrompt} Manage the household for simulation day ${startDay}.`
+                : `${userPrompt} Manage the household simulation from day ${startDay} through day ${endDay}.`;
+
         const apiResponse = await fetch("/api/execute", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                prompt: userPrompt
+                prompt: simulationPrompt
             })
         });
 
@@ -43,6 +60,12 @@ runButton.addEventListener("click", async function () {
 
         responseBox.textContent = result.response;
         stepsBox.innerHTML = "";
+
+        if (!result.steps || result.steps.length === 0) {
+            stepsBox.textContent =
+                "No execution steps available.";
+            return;
+        }
 
         result.steps.forEach(function (step, index) {
             const stepElement = document.createElement("div");
