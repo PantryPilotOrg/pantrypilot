@@ -4,9 +4,15 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from app.agent.runner import run_agent
+from app.services.scheduler_service import run_days
 
 class ExecuteRequest(BaseModel):
     prompt: str
+
+class SimulationRequest(BaseModel):
+    prompt: str
+    start_day: int
+    end_day: int
 
 app = FastAPI()
 STATIC_DIR = Path(__file__).resolve().parent / "static"
@@ -84,3 +90,25 @@ def execute(request: ExecuteRequest):
             "response": None,
             "steps": []
         }
+
+@app.post("/api/simulate")
+def simulate(request: SimulationRequest):
+    try:
+        results = run_days(
+            request.start_day,
+            request.end_day,
+            request.prompt,
+        )
+
+        return {
+            "status": "ok",
+            "error": None,
+            "results": results,
+        }
+
+    except Exception as error:
+        return {
+            "status": "error",
+            "error": str(error),
+            "results": [],
+        }        

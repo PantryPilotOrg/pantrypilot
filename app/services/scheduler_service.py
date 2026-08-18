@@ -1,9 +1,13 @@
 from app.agent.runner import run_agent
 from app.services.run_state_service import reset_run_state
 
-MAX_RUN_DAYS = 3
+MAX_RUN_DAYS = 7
 
-def run_days(start_day: int, end_day: int) -> list[dict]:
+def run_days(
+    start_day: int,
+    end_day: int,
+    user_prompt: str = "Manage my kitchen",
+) -> list[dict]:
     if start_day < 1:
         raise ValueError("Start day must be at least 1.")
 
@@ -20,9 +24,13 @@ def run_days(start_day: int, end_day: int) -> list[dict]:
     results = []
 
     for day in range(start_day, end_day + 1):
+        print(f"Starting simulation day {day}...")
+
         result = run_agent(
-            f"Manage my kitchen for simulation day {day}."
+            f"{user_prompt} for simulation day {day}."
         )
+
+        print(f"Finished simulation day {day}.")
 
         results.append(
             {

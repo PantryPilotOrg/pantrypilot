@@ -12,53 +12,96 @@
     <div class="decoration dot-one"></div>
     <div class="decoration dot-two"></div>
     <div class="decoration dot-three"></div>
-    <div class="container">
 
+    <div class="container">
 
         <div class="header">
             <div class="logo-icon">🛒</div>
 
             <div>
                 <h1>PantryPilot</h1>
-                <p class="subtitle">Your autonomous household shopping assistant</p>
+                <p class="subtitle">
+                    Your autonomous household shopping assistant
+                </p>
             </div>
+        </div>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            Agent ready
         </div>
 
         <div class="prompt-title">
             <p class="hint">
-                Try: “Manage the household grocery needs for day 3.”
-                Supported simulation days: 1–3.
+                Run PantryPilot across one or more simulation days.
+                Supported simulation days: 1–7.
             </p>
-            What should PantryPilot handle today?
+
+            What should PantryPilot manage?
         </div>
 
         <textarea
             id="prompt"
-            rows="6"
-            placeholder="Example: Manage the household grocery needs for day 3."
+            rows="5"
+            placeholder="Example: Manage my kitchen while minimizing unnecessary purchases."
         ></textarea>
 
-        <br><br>
+        <div class="day-controls">
+
+            <div class="day-field">
+                <label for="start-day">Start day</label>
+
+                <select id="start-day">
+                    <option value="1">Day 1</option>
+                    <option value="2">Day 2</option>
+                    <option value="3">Day 3</option>
+                    <option value="4">Day 4</option>
+                    <option value="5">Day 5</option>
+                    <option value="6">Day 6</option>
+                    <option value="7">Day 7</option>
+                </select>
+            </div>
+
+            <div class="day-field">
+                <label for="end-day">End day</label>
+
+                <select id="end-day">
+                    <option value="1">Day 1</option>
+                    <option value="2">Day 2</option>
+                    <option value="3">Day 3</option>
+                    <option value="4">Day 4</option>
+                    <option value="5">Day 5</option>
+                    <option value="6">Day 6</option>
+                    <option value="7" selected>Day 7</option>
+                </select>
+            </div>
+
+        </div>
 
         <button id="run-button">
-            Run Agent <span>→</span>
+            Run Simulation <span>→</span>
         </button>
 
         <h2 class="section-title">
-            <span>✦</span> Agent Response
+            <span>✦</span>
+            PantryPilot Response
         </h2>
+
         <div id="response">
-            No response yet.
+            Simulation results will appear here.
         </div>
 
         <h2 class="section-title">
-            <span>◎</span> Execution Steps
+            <span>✦</span>
+            Execution Steps
         </h2>
+
         <div id="steps">
-            No steps yet.
+            Agent execution steps will appear here.
         </div>
 
     </div>
+
     <script src="/static/app.js"></script>
 </body>
 

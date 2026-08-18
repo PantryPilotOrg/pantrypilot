@@ -1,0 +1,25 @@
+item_id,item_name,quantity,unit,days_until_expiry
+milk,Milk,0.9,carton,3
+yogurt,Yogurt,0.7,cup,4
+eggs,Eggs,0.5,dozen,6
+bread,Bread,0.8,loaf,2
+rice,Rice,0.9,package,
+pasta,Pasta,0.7,package,174
+tomatoes,Tomatoes,0.6,kg,3
+cucumbers,Cucumbers,0.5,kg,3
+chicken,Chicken,0.5,kg,2
+coffee,Coffee,0.25,package,
+olive_oil,Olive Oil,0.18,bottle,
+cat_food,Cat Food,0.5,bag,
+bananas,Bananas,0.4,kg,2
+apples,Apples,0.6,kg,3
+potatoes,Potatoes,0.8,kg,8
+onions,Onions,0.5,kg,8
+cheese,Cheese,0.45,package,6
+cereal,Cereal,0.6,package,84
+flour,Flour,0.4,package,174
+tuna,Tuna,0.9,package,359
+frozen_vegetables,Frozen Vegetables,0.8,package,114
+toilet_paper,Toilet Paper,0.9,package,
+dish_soap,Dish Soap,0.55,bottle,
+laundry_detergent,Laundry Detergent,0.58,bottle,

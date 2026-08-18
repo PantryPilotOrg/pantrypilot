@@ -7,7 +7,7 @@ def get_inventory(day: int) -> list[dict]:
     Load mocked household inventory for a selected simulation day.
 
     Args:
-        day: Simulation day number, currently 1, 2, or 3.
+        day: Simulation day number, currently 1 through 7.
 
     Returns:
         A list of inventory item dictionaries.
@@ -16,8 +16,8 @@ def get_inventory(day: int) -> list[dict]:
         ValueError: If the requested day is invalid.
         FileNotFoundError: If the CSV file does not exist.
     """
-    if day not in {1, 2, 3}:
-        raise ValueError("Day must be 1, 2, or 3.")
+    if day not in range(1, 8):
+        raise ValueError("Day must be between 1 and 7.")
 
     inventory_path = DATA_DIR / f"inventory_day_{day}.csv"
     items = []
