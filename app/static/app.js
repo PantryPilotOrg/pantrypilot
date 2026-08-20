@@ -19,7 +19,7 @@ runButton.addEventListener("click", async function () {
         responseBox.textContent =
             "Start day cannot be after end day.";
         stepsBox.textContent =
-            "Please choose a valid simulation period.";
+            "Please choose a valid day range.";
         return;
     }
 
@@ -30,10 +30,10 @@ runButton.addEventListener("click", async function () {
     stepsBox.textContent = "Waiting for execution steps...";
 
     try {
-        const simulationPrompt =
+        const agentPrompt =
             startDay === endDay
-                ? `${userPrompt} Manage the household for simulation day ${startDay}.`
-                : `${userPrompt} Manage the household simulation from day ${startDay} through day ${endDay}.`;
+                ? `${userPrompt} Manage the household for day ${startDay}.`
+                : `${userPrompt} Manage the household from day ${startDay} through day ${endDay}.`;
 
         const apiResponse = await fetch("/api/execute", {
             method: "POST",
@@ -41,7 +41,7 @@ runButton.addEventListener("click", async function () {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                prompt: simulationPrompt
+                prompt: agentPrompt
             })
         });
 
@@ -90,7 +90,7 @@ runButton.addEventListener("click", async function () {
                     } else if (toolName === "find_purchase_options") {
                         actionText = "Compared purchase options";
                     } else if (toolName === "place_order") {
-                        actionText = "Placed mock order";
+                        actionText = "Placed order";
                     } else {
                         actionText = `Used tool: ${toolName}`;
                     }

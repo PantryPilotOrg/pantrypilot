@@ -27,7 +27,7 @@ def run_days(
         print(f"Starting simulation day {day}...")
 
         result = run_agent(
-            f"{user_prompt} for simulation day {day}."
+             f"{user_prompt} for day {day}."
         )
 
         print(f"Finished simulation day {day}.")

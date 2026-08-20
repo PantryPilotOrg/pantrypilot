@@ -1,6 +1,43 @@
 import csv
+import math
 
 from app.config import DATA_DIR
+
+def get_item_units() -> dict[str, str]:
+    """
+    Load the purchase unit for each inventory item.
+
+    Item units are consistent across the daily inventory snapshots,
+    so day 1 is used as the unit reference.
+    """
+    inventory_path = DATA_DIR / "inventory_day_1.csv"
+    units = {}
+
+    with inventory_path.open(
+        mode="r",
+        encoding="utf-8",
+        newline="",
+    ) as file:
+        reader = csv.DictReader(file)
+
+        for row in reader:
+            units[row["item_id"]] = row["unit"]
+
+    return units
+
+
+def normalize_order_quantity(quantity: float, unit: str) -> float:
+    """
+    Convert a requested quantity into a purchasable quantity.
+
+    Weight-based items may be purchased in 0.1 kg increments.
+    Packaged items must be purchased as whole units.
+    """
+    if unit == "kg":
+        return round(math.ceil(quantity * 10) / 10, 1)
+
+    return float(math.ceil(quantity))
+
 
 
 def get_supplier_offers(item_ids: list[str]) -> list[dict]:
@@ -105,13 +142,21 @@ def evaluate_supplier_order(
     }
 
     offered_item_ids = set()
+    item_units = get_item_units()
 
     for offer in supplier_offers:
         item_id = offer["item_id"]
         offered_item_ids.add(item_id)
 
         requested_item = requested_items_by_id[item_id]
-        quantity = requested_item["quantity"]
+        requested_quantity = requested_item["quantity"]
+        unit = item_units[item_id]
+
+        quantity = normalize_order_quantity(
+            requested_quantity,
+            unit,
+        )
+
         item_total = offer["unit_price"] * quantity
 
         basket["items"].append(

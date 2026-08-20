@@ -23,8 +23,8 @@ def process_order(
         or a structured rejection explaining why it cannot be placed.
 
     Note:
-        This MVP version does not update budget, inventory,
-        order history, or long-term memory.
+    This MVP version updates the simulated budget and order history.
+    It does not update inventory or long-term memory.
     """
     if not items:
         return {

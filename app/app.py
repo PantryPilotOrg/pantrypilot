@@ -68,7 +68,7 @@ def get_agent_info():
             "purchasing decisions based on changing household needs."
         ),
         "prompt_template": {
-            "template": "Manage my household for simulation day {day}."
+            "template": "Manage my household for day {day}."
         },
         "prompt_examples": prompt_examples,
     }
@@ -92,7 +92,7 @@ def execute(request: ExecuteRequest):
         prompt = request.prompt
 
         range_match = re.search(
-            r"simulation from day (\d+) through day (\d+)",
+            r" from day (\d+) through day (\d+)",
             prompt,
             re.IGNORECASE,
         )
@@ -107,10 +107,17 @@ def execute(request: ExecuteRequest):
             if start_day > end_day:
                 raise ValueError("Start day cannot be after end day.")
 
+            base_prompt = re.sub(
+                r"manage the household from day \d+ through day \d+\.",
+                "",
+                prompt,
+                flags=re.IGNORECASE,
+            ).strip().rstrip(" .")
+
             results = run_days(
                 start_day,
                 end_day,
-                prompt,
+                base_prompt,
             )
 
             responses = []
@@ -133,13 +140,47 @@ def execute(request: ExecuteRequest):
                 "steps": all_steps,
             }
 
+        single_day_match = re.search(
+            r"day (\d+)",
+            prompt,
+            re.IGNORECASE,
+        )
+
+        if single_day_match:
+            day = int(single_day_match.group(1))
+
+            if not 1 <= day <= 7:
+                raise ValueError("Day must be between 1 and 7.")
+
+            base_prompt = re.sub(
+                r"manage the household for day \d+\.",
+                "",
+                prompt,
+                flags=re.IGNORECASE,
+            ).strip().rstrip(" .")
+
+            results = run_days(
+                day,
+                day,
+                base_prompt,
+            )
+
+            day_result = results[0]
+
+            return {
+                "status": "ok",
+                "error": None,
+                "response": day_result["response"],
+                "steps": day_result["steps"],
+            }
+
         result = run_agent(prompt)
 
         return {
             "status": "ok",
             "error": None,
             "response": result["response"],
-            "steps": result["steps"]
+            "steps": result["steps"],
         }
 
     except Exception as error:
