@@ -16,7 +16,8 @@ def get_household_state(day: int) -> dict:
     as an agent tool.
 
     Args:
-        day: Simulation day number, currently 1, 2, or 3.
+        day: Simulation day number within the selected simulation range,
+     currently 1 through 7.
 
     Returns:
         A structured response containing the household profile,

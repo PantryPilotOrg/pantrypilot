@@ -10,6 +10,32 @@ from langchain.agents.middleware import (
 steps: list[dict] = []
 
 
+def _serialize_message(message) -> dict:
+    """
+    Convert a LangChain message to a compact trace representation.
+    Keep only information relevant to understanding the agent's behavior.
+    """
+    serialized = {
+        "type": message.type,
+        "content": message.content,
+    }
+
+    if getattr(message, "name", None):
+        serialized["name"] = message.name
+
+    tool_calls = getattr(message, "tool_calls", None)
+    if tool_calls:
+        serialized["tool_calls"] = [
+            {
+                "name": tool_call.get("name"),
+                "args": tool_call.get("args"),
+            }
+            for tool_call in tool_calls
+        ]
+
+    return serialized
+
+
 @wrap_model_call
 def trace_model_call(
     request: ModelRequest,
@@ -18,8 +44,8 @@ def trace_model_call(
     """
     Record each LLM call made by the agent.
 
-    The trace stores the model input and output in the format required
-    by the project API.
+    The trace stores only the model input and output information needed
+    to understand the agent's decisions.
     """
     response = handler(request)
 
@@ -28,13 +54,13 @@ def trace_model_call(
             "module": "pantrypilot_agent",
             "prompt": {
                 "messages": [
-                    message.model_dump()
+                    _serialize_message(message)
                     for message in request.messages
                 ]
             },
             "response": {
                 "messages": [
-                    message.model_dump()
+                    _serialize_message(message)
                     for message in response.result
                 ]
             },
