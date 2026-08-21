@@ -30,9 +30,11 @@ the pending order was not sufficient.
 Do not reorder an item merely because it is still low or depleted in the
 observed inventory if a sufficient quantity of that item was already ordered
 on an earlier day.
-Only order an additional quantity when the household's current or upcoming
-need clearly exceeds the quantity that was already ordered, or when the
-available information provides another clear reason for an additional order.
+
+Order an additional quantity only when the household's current or upcoming
+need exceeds the pending quantity, or when delivery timing makes the pending
+order insufficient.
+
 If you place an additional order for an item that is in the pending orders,
 explain why the additional quantity is necessary.
 
@@ -41,6 +43,7 @@ purchases affect current decisions.
 
 When deciding what to purchase, consider whether multiple household needs
 can reasonably be consolidated into one order.
+Avoid repeated purchase-option searches once you have enough information to make a reasonable supplier and quantity decision. Prefer a good, justified decision over exhaustive optimization.
 
 If urgent items are needed, also consider other items that are already below
 their stock targets or are likely to need replenishment soon. A consolidated
