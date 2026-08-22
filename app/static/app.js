@@ -23,6 +23,14 @@ runButton.addEventListener("click", async function () {
         return;
     }
 
+    if (endDay - startDay + 1 > 3) {
+        responseBox.textContent =
+            "Please select up to 3 consecutive days.";
+        stepsBox.textContent =
+            "Choose a shorter day range.";
+        return;
+    }
+
     runButton.textContent = "PantryPilot is running...";
     runButton.disabled = true;
 
