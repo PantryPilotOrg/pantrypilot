@@ -193,6 +193,43 @@ button span {
 }
 
 
+/* Loading animation */
+
+.loading-animation {
+    position: relative;
+    height: 48px;
+    margin-top: 18px;
+    overflow: hidden;
+}
+
+.rolling-items {
+    position: absolute;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    font-size: 27px;
+    white-space: nowrap;
+    animation: pantry-roll 4s linear infinite;
+}
+
+@keyframes pantry-roll {
+    from {
+        transform: translateX(-220px);
+    }
+
+    to {
+        transform: translateX(800px);
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+
+/* Section titles */
+
+
 /* Section titles */
 
 .section-title {

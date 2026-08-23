@@ -5,6 +5,8 @@ const promptBox = document.getElementById("prompt");
 const startDayBox = document.getElementById("start-day");
 const endDayBox = document.getElementById("end-day");
 
+const loadingAnimation = document.getElementById("loading-animation");
+
 runButton.addEventListener("click", async function () {
     const userPrompt = promptBox.value.trim();
     const startDay = Number(startDayBox.value);
@@ -33,6 +35,7 @@ runButton.addEventListener("click", async function () {
 
     runButton.textContent = "PantryPilot is running...";
     runButton.disabled = true;
+    loadingAnimation.classList.remove("hidden");
 
     responseBox.textContent = "Running agent...";
     stepsBox.textContent = "Waiting for execution steps...";
@@ -148,6 +151,8 @@ runButton.addEventListener("click", async function () {
         console.error(error);
 
     } finally {
+        loadingAnimation.classList.add("hidden");
+
         runButton.textContent = "Run Agent →";
         runButton.disabled = false;
     }
