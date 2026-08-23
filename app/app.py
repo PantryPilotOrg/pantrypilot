@@ -59,13 +59,13 @@ def get_agent_info():
     return {
         "description": (
             "PantryPilot is an autonomous household shopping agent that "
-            "observes changing household needs, compares purchase options, "
-            "and decides what to buy, when to order, and when to wait."
+            "uses simulated household data to evaluate needs, compare "
+            "purchase options, and make shopping decisions."
         ),
         "purpose": (
-            "Reduce the mental load of recurring household shopping while "
-            "preventing shortages and unnecessary purchases and considering "
-            "budget, expiry, upcoming events, and delivery constraints."
+            "Reduce household shopping effort, prevent shortages and "
+            "unnecessary purchases, reduce food waste, and make cost-aware "
+            "purchasing decisions based on changing household needs."
         ),
         "prompt_template": {
             "template": "Manage my household for day {day}."
