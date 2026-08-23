@@ -221,6 +221,7 @@ button span {
 
 #response {
     border-left: 4px solid #9b7bd4;
+    white-space: pre-wrap;
 }
 
 #steps {

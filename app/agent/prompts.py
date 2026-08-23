@@ -84,6 +84,8 @@ If an order cannot be placed, explain the reason rather than pretending it
 succeeded.
 
 After completing the task, give the user a short final response.
+When referring to a supplier in the final response, use the human-readable
+supplier name when available, not the supplier_id.
 The final response should summarize only:
 - the main decision or actions taken,
 - the key reason for those decisions,
